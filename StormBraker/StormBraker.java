@@ -16,20 +16,20 @@ public class StormBraker extends Bot {
     @Override
     public void run() {
         // Set colors to match Thor's Stormbreaker hammer
-        setBodyColor(new Color(255, 0, 0)); // Metallic silver
-        setGunColor(new Color(0, 255, 0)); // Darker metallic silver
-        setRadarColor(new Color(169, 169, 169)); // Metallic silver
-        setBulletColor(new Color(255, 215, 0)); // Gold for the lightning effect
+        setBodyColor(new Color(255, 0, 0));
+        setGunColor(new Color(0, 255, 0));
+        setRadarColor(new Color(169, 169, 169));
+        setBulletColor(new Color(255, 215, 0));
         setScanColor(new Color(255, 255, 255));
 
         // Repeat while the bot is running
         while (isRunning()) {
             // Move in a more unpredictable pattern
-            forward(100);
+            forward(100 + Math.random() * 50);
             turnGunRight(360);
             back(100);
             turnGunRight(360);
-            turnRadarRight(360);
+            //turnRadarRight(360);
         }
     }
 
@@ -46,9 +46,13 @@ public class StormBraker extends Bot {
         // Calculate the bearing to the direction of the bullet
         var bearing = calcBearing(e.getBullet().getDirection());
 
+            setTurnRight(90 - bearing); // Move perpendicular to dodge
+
         // Turn 90 degrees to the bullet direction based on the bearing
         turnLeft(90 - bearing);
+        forward(150);
     }
+
 
 
 }
