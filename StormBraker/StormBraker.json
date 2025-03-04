@@ -2,15 +2,18 @@
   "name": "Storm Braker",
   "version": "1.0",
   "authors": [
-    "Mathew Nelson",
-    "Flemming N. Larsen"
+    "Venkataramana Reddy K",
+    "Sonali Sharma",
+    "Bhavya P",
+    "Prem Kumar G"
   ],
   "description": "A sample bot that is probably the first bot you will learn about.",
   "homepage": "",
   "countryCodes": [
     "us",
-    "dk"
+    "in",
+    "uk"
   ],
   "platform": "JVM",
-  "programmingLang": "Java 11"
+  "programmingLang": "Java 21"
 }

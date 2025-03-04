@@ -3,9 +3,10 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/stormbraker" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/StormBraker" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="robocode-tankroyale-bot-api-0.30.0" level="project" />
   </component>
 </module>

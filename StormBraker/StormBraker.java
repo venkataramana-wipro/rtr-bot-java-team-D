@@ -25,28 +25,52 @@ public class StormBraker extends Bot {
     // Called when a new round is started -> initialize and do some movement
     @Override
     public void run() {
-        // Repeat while the bot is running
+        setAdjustRadarForBodyTurn(true); // Keep the gun independent of the bot's turn
+        setAdjustRadarForGunTurn(true); // Keep the radar independent of the gun's turn
+
         while (isRunning()) {
+            // Move in a more unpredictable pattern
             forward(100);
-            turnGunRight(360);
+            turnRight(45);
             back(100);
-            turnGunRight(360);
+            turnLeft(45);
         }
     }
 
-    // We saw another bot -> fire!
     @Override
     public void onScannedBot(ScannedBotEvent e) {
-        fire(1);
+        double enemyX = e.getX();
+        double enemyY = e.getY();
+        double distance = calculateDistance(getX(), getY(), enemyX, enemyY);
+        double firePower = Math.min(500 / distance, 3);
+        // Adjust fire power based on distance// Lock radar on the target
+
+        double angleToTarget = Math.toDegrees(Math.atan2(enemyX - getX(), enemyY - getY()));
+        double gunTurn = normalizeBearing(angleToTarget - getDirection());
+        turnGunRight(gunTurn);
+        double radarTurn = normalizeBearing(angleToTarget - getDirection());
+        turnRadarRight(radarTurn);
+
+        fire(firePower);
     }
 
-    // We were hit by a bullet -> turn perpendicular to the bullet
     @Override
     public void onHitByBullet(HitByBulletEvent e) {
         // Calculate the bearing to the direction of the bullet
         var bearing = calcBearing(e.getBullet().getDirection());
 
-        // Turn 90 degrees to the bullet direction based on the bearing
+        // Turn perpendicular to the bullet direction
         turnLeft(90 - bearing);
+
+        // Move forward to dodge the bullet
+        forward(50);
+    }
+    private double calculateDistance(double x1, double y1, double x2, double y2) {
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    }
+    private double normalizeBearing(double angle) {
+        while (angle > 180) angle -= 360;
+        while (angle < -180) angle += 360;
+        return angle;
     }
 }

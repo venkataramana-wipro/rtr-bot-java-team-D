@@ -1,1 +1,1 @@
-java -cp ../lib/* MyFirstBot.java >nul
+java -cp ../lib/* StormBraker.java >nul
