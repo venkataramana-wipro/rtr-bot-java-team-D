@@ -10,16 +10,16 @@ import dev.robocode.tankroyale.botapi.events.*;
 // Probably the first bot you will learn about.
 // Moves in a seesaw motion, and spins the gun around at each end.
 // ------------------------------------------------------------------
-public class MyFirstBot extends Bot {
+public class StormBraker extends Bot {
 
     // The main method starts our bot
     public static void main(String[] args) {
-        new MyFirstBot().start();
+        new StormBraker().start();
     }
 
     // Constructor, which loads the bot config file
-    MyFirstBot() {
-        super(BotInfo.fromFile("MyFirstBot.json"));
+    StormBraker() {
+        super(BotInfo.fromFile("StormBraker.json"));
     }
 
     // Called when a new round is started -> initialize and do some movement
