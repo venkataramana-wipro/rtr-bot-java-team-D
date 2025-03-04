@@ -1,39 +1,35 @@
 import dev.robocode.tankroyale.botapi.*;
 import dev.robocode.tankroyale.botapi.events.*;
 
-// ------------------------------------------------------------------
-// MyFirstBot
-// ------------------------------------------------------------------
-// A sample bot original made for Robocode by Mathew Nelson.
-// Ported to Robocode Tank Royale by Flemming N. Larsen.
-//
-// Probably the first bot you will learn about.
-// Moves in a seesaw motion, and spins the gun around at each end.
-// ------------------------------------------------------------------
+import java.awt.*;
+
 public class StormBraker extends Bot {
 
-    // The main method starts our bot
     public static void main(String[] args) {
         new StormBraker().start();
     }
 
-    // Constructor, which loads the bot config file
     StormBraker() {
         super(BotInfo.fromFile("StormBraker.json"));
     }
 
-    // Called when a new round is started -> initialize and do some movement
     @Override
     public void run() {
-        setAdjustRadarForBodyTurn(true); // Keep the gun independent of the bot's turn
-        setAdjustRadarForGunTurn(true); // Keep the radar independent of the gun's turn
+        // Set colors to match Thor's Stormbreaker hammer
+        setBodyColor(new Color(255, 0, 0)); // Metallic silver
+        setGunColor(new Color(0, 255, 0)); // Darker metallic silver
+        setRadarColor(new Color(169, 169, 169)); // Metallic silver
+        setBulletColor(new Color(255, 215, 0)); // Gold for the lightning effect
+        setScanColor(new Color(255, 255, 255));
 
+        // Repeat while the bot is running
         while (isRunning()) {
             // Move in a more unpredictable pattern
             forward(100);
-            turnRight(45);
+            turnGunRight(360);
             back(100);
-            turnLeft(45);
+            turnGunRight(360);
+            turnRadarRight(360);
         }
     }
 
@@ -41,36 +37,30 @@ public class StormBraker extends Bot {
     public void onScannedBot(ScannedBotEvent e) {
         double enemyX = e.getX();
         double enemyY = e.getY();
-        double distance = calculateDistance(getX(), getY(), enemyX, enemyY);
-        double firePower = Math.min(500 / distance, 3);
-        // Adjust fire power based on distance// Lock radar on the target
-
         double angleToTarget = Math.toDegrees(Math.atan2(enemyX - getX(), enemyY - getY()));
         double gunTurn = normalizeBearing(angleToTarget - getDirection());
         turnGunRight(gunTurn);
+        // Lock radar on the target
         double radarTurn = normalizeBearing(angleToTarget - getDirection());
         turnRadarRight(radarTurn);
-
-        fire(firePower);
+        fire(1);
     }
 
+    private double normalizeBearing(double angle) {
+        while (angle > 180) angle -= 360;
+        while (angle < -180) angle += 360;
+        return angle;
+    }
+
+    // We were hit by a bullet -> turn perpendicular to the bullet
     @Override
     public void onHitByBullet(HitByBulletEvent e) {
         // Calculate the bearing to the direction of the bullet
         var bearing = calcBearing(e.getBullet().getDirection());
 
-        // Turn perpendicular to the bullet direction
+        // Turn 90 degrees to the bullet direction based on the bearing
         turnLeft(90 - bearing);
-
-        // Move forward to dodge the bullet
-        forward(50);
-    }
-    private double calculateDistance(double x1, double y1, double x2, double y2) {
-        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-    }
-    private double normalizeBearing(double angle) {
-        while (angle > 180) angle -= 360;
-        while (angle < -180) angle += 360;
-        return angle;
+        // turnRight(90 + bearing);
+        forward(50 + Math.random() * 50);
     }
 }
