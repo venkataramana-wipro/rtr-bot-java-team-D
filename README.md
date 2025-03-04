@@ -52,6 +52,10 @@ Refer to the `sample-bot` folder for an example of how to structure your bot's f
 
 Make sure to test your bot thoroughly before submitting it.
 
+## Start building the bot
+
+To start building the bot, you will need the API jar which you can find under the release section of this repo.
+
 ## Useful resources:
 
 - Bot tutorial: https://robocode-dev.github.io/tank-royale/tutorial/my-first-bot.html
