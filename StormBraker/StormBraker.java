@@ -33,23 +33,11 @@ public class StormBraker extends Bot {
         }
     }
 
+
+    // We saw another bot -> fire!
     @Override
     public void onScannedBot(ScannedBotEvent e) {
-        double enemyX = e.getX();
-        double enemyY = e.getY();
-        double angleToTarget = Math.toDegrees(Math.atan2(enemyX - getX(), enemyY - getY()));
-        double gunTurn = normalizeBearing(angleToTarget - getDirection());
-        turnGunRight(gunTurn);
-        // Lock radar on the target
-        double radarTurn = normalizeBearing(angleToTarget - getDirection());
-        turnRadarRight(radarTurn);
         fire(1);
-    }
-
-    private double normalizeBearing(double angle) {
-        while (angle > 180) angle -= 360;
-        while (angle < -180) angle += 360;
-        return angle;
     }
 
     // We were hit by a bullet -> turn perpendicular to the bullet
@@ -60,7 +48,7 @@ public class StormBraker extends Bot {
 
         // Turn 90 degrees to the bullet direction based on the bearing
         turnLeft(90 - bearing);
-        // turnRight(90 + bearing);
-        forward(50 + Math.random() * 50);
     }
+
+
 }
