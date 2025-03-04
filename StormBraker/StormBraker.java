@@ -25,10 +25,14 @@ public class StormBraker extends Bot {
         // Repeat while the bot is running
         while (isRunning()) {
             // Move in a more unpredictable pattern
-            forward(100 + Math.random() * 50);
+            forward(60 );
+            fire(1);
             turnGunRight(360);
+            fire(2);
             back(100);
+            fire(1);
             turnGunRight(360);
+            fire(2);
             //turnRadarRight(360);
         }
     }
@@ -37,7 +41,12 @@ public class StormBraker extends Bot {
     // We saw another bot -> fire!
     @Override
     public void onScannedBot(ScannedBotEvent e) {
-        fire(1);
+//        double enemyX = e.getX();
+//        double enemyY = e.getY();
+//        double distance = calculateDistance(getX(), getY(), enemyX, enemyY);
+//
+//        double firePower = Math.min(500 / distance, 1); // Use lower firepower for faster bullets
+        fire(3);
     }
 
     // We were hit by a bullet -> turn perpendicular to the bullet
@@ -53,6 +62,9 @@ public class StormBraker extends Bot {
         forward(150);
     }
 
+//    } private double calculateDistance(double x1, double y1, double x2, double y2) {
+//        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+//    }
 
 
 }
