@@ -25,7 +25,8 @@ public class StormBraker extends Bot {
         // Repeat while the bot is running
         while (isRunning()) {
             // Move in a more unpredictable pattern
-            forward(60 );
+            back(60 );
+            turnLeft(180);
             fire(1);
             turnGunRight(360);
             fire(2);
@@ -59,7 +60,7 @@ public class StormBraker extends Bot {
 
         // Turn 90 degrees to the bullet direction based on the bearing
         turnLeft(90 - bearing);
-        forward(150);
+        back(150);
     }
 
 //    } private double calculateDistance(double x1, double y1, double x2, double y2) {
